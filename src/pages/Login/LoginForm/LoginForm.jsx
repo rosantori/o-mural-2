@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFormSchema } from 'validators/loginFormSchema';
 import './LoginForm.css';
 
-function LoginForm() {
+function LoginForm({ onSignIn, onSignUp }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,6 +20,11 @@ function LoginForm() {
 
   const onError = (response) => {
     console.log('ROSANA onError', response);
+  };
+
+  const handleSignUp = () => {
+    console.log('ROSANA oie sign up');
+    onSignUp();
   };
 
   return (
@@ -69,12 +75,17 @@ function LoginForm() {
           </div>
           <div className="field buttons">
             <div>
-              <Button type="submit" color="inherit" variant="contained">
+              <Button disableElevation type="submit" color="inherit" variant="contained">
                 Sign in
               </Button>
             </div>
             <div>
-              <Button color="inherit" variant="outlined">
+              <Button
+                disableElevation
+                onClick={handleSignUp}
+                color="inherit"
+                variant="outlined"
+              >
                 Sign up
               </Button>
             </div>
@@ -83,5 +94,10 @@ function LoginForm() {
     </form>
   );
 }
+
+LoginForm.propTypes = {
+  onSignIn: PropTypes.func.isRequired,
+  onSignUp: PropTypes.func.isRequired,
+};
 
 export { LoginForm };
