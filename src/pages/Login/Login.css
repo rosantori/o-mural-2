@@ -1,0 +1,10 @@
+.login-container {
+  width: 100vw;
+  max-width: 100vw;
+}
+
+.login-container .logo-completa {
+  width: 100%;
+  padding: 15%;
+  box-sizing: border-box;
+}
