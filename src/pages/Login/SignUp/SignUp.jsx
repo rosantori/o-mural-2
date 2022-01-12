@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent,
   Table, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
@@ -6,12 +6,27 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import logo from 'assets/logo-reduzida.svg';
 import { signUpSchema } from 'validators';
+import { LoadingScreen } from 'components';
 import './SignUp.css';
 
 function SignUp({ open, setOpen }) {
+  const [loading, setLoading] = useState(false);
   const { control, getValues, reset, trigger } = useForm({
     resolver: yupResolver(signUpSchema),
   });
+
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
+  function handleSignUp() {
+    setLoading(true);
+    sleep(5000).then(() => {
+      setLoading(false);
+      toast('Cadastrado! (de mentirinha)');
+      setOpen(false);
+    })
+  }
 
   useEffect(() => {
     if (!open) {
@@ -23,6 +38,7 @@ function SignUp({ open, setOpen }) {
 
   return (
     <div className="signUp-container">
+      {loading && (<LoadingScreen />)}
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
@@ -155,7 +171,7 @@ function SignUp({ open, setOpen }) {
             <Button disableElevation
               color="inherit"
               variant="contained"
-              onClick={() => toast('Cadastro pipipipopopó')}
+              onClick={handleSignUp}
             >
               Cadastrar
             </Button>
