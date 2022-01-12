@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Dialog, DialogActions, DialogContent,
   Table, TableBody, TableCell, TableRow, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 import logo from 'assets/logo-reduzida.svg';
+import { signUpSchema } from 'validators';
 import './SignUp.css';
 
 function SignUp({ open, setOpen }) {
-  const { control, getValues } = useForm();
+  const { control, getValues, reset, trigger } = useForm({
+    resolver: yupResolver(signUpSchema),
+  });
+
+  useEffect(() => {
+    if (!open) {
+      const defaultValues = {};
+      reset(defaultValues);
+      trigger();
+    }
+  }, [open, reset, trigger]);
+
   return (
     <div className="signUp-container">
       <Dialog
@@ -18,7 +32,6 @@ function SignUp({ open, setOpen }) {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell> Nome </TableCell>
                   <TableCell> 
                     <Controller
                       name="name"
@@ -30,37 +43,12 @@ function SignUp({ open, setOpen }) {
                           value={getValues('name')}
                           onChange={(e) => {
                             const { value } = e.target;
-                            console.log('ROSANA nome', value);
                             onChange(value);
                           }}
                         />
                       )}
                     />
                   </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell> Email </TableCell>
-                  <TableCell> 
-                    <Controller
-                      name="email"
-                      control={control}
-                      render={({ field: { onChange }}) => (
-                        <TextField
-                          value={getValues('email')}
-                          placeholder="Digite seu email"
-                          label='Email'
-                          onChange={(e) => {
-                            const { value } = e.target;
-                            console.log('ROSANA email', value);
-                            onChange(value);
-                          }}
-                        />
-                      )}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell> username </TableCell>
                   <TableCell> 
                     <Controller
                       name="username"
@@ -72,7 +60,80 @@ function SignUp({ open, setOpen }) {
                           label='@'
                           onChange={(e) => {
                             const { value } = e.target;
-                            console.log('ROSANA username', value);
+                            onChange(value);
+                          }}
+                        />
+                      )}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell> 
+                    <Controller
+                      name="birthdate"
+                      control={control}
+                      render={({ field: { onChange }}) => (
+                        <TextField
+                          placeholder="Data de Nascimento"
+                          label='Data de Nascimento'
+                          value={getValues('birthdate')}
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            onChange(value);
+                          }}
+                        />
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell> 
+                    <Controller
+                      name="email"
+                      control={control}
+                      render={({ field: { onChange }}) => (
+                        <TextField
+                          value={getValues('email')}
+                          placeholder="Digite seu email"
+                          label='Email'
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            onChange(value);
+                          }}
+                        />
+                      )}
+                    />
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell> 
+                    <Controller
+                      name="password"
+                      control={control}
+                      render={({ field: { onChange }}) => (
+                        <TextField
+                          value={getValues('password')}
+                          placeholder="Digite sua senha"
+                          type="password"
+                          label='Senha'
+                          onChange={(e) => {
+                            const { value } = e.target;
+                            onChange(value);
+                          }}
+                        />
+                      )}
+                    />
+                  </TableCell>
+                  <TableCell> 
+                    <Controller
+                      name="passwordConfirm"
+                      control={control}
+                      render={({ field: { onChange }}) => (
+                        <TextField
+                          value={getValues('passwordConfirm')}
+                          placeholder="Confirme sua Senha"
+                          label='Confirme sua Senha'
+                          type="password"
+                          onChange={(e) => {
+                            const { value } = e.target;
                             onChange(value);
                           }}
                         />
@@ -93,7 +154,9 @@ function SignUp({ open, setOpen }) {
             </Button>
             <Button disableElevation
               color="inherit"
-              variant="contained">
+              variant="contained"
+              onClick={() => toast('Cadastro pipipipopopó')}
+            >
               Cadastrar
             </Button>
           </DialogActions>

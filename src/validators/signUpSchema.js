@@ -6,7 +6,7 @@ const signUpSchema = yup.object({
   birthdate: yup.date().required(),
   email: yup.string().required(),
   password: yup.string().required(),
-  passwordConfirm: yup.string().srequired(),
+  passwordConfirm: yup.string().required(),
 }).required();
 
 export { signUpSchema};
