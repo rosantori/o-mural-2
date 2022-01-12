@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginFormSchema } from 'validators/loginFormSchema';
+import { loginFormSchema } from 'validators';
 import './LoginForm.css';
 
 function LoginForm({ onSignIn, onSignUp }) {
