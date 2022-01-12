@@ -1,0 +1,9 @@
+.home-container {
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.home-container .logo{
+  max-width: 100%;
+}
